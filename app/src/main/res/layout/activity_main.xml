@@ -4,4 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.showcase.app.MainActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame" >
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/viewpointListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</FrameLayout>

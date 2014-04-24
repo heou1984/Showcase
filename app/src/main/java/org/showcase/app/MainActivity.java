@@ -10,11 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.showcase.app.api.ApiClient;
 import org.showcase.app.model.BaseRequest;
 import org.showcase.app.model.Viewpoint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -28,12 +31,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
+        */
         BaseRequest _request = new BaseRequest();
 
         _request.setQuery("test");
@@ -50,6 +54,18 @@ public class MainActivity extends ActionBarActivity {
                 System.out.println("________");
             }
         });
+
+
+
+        ListView _listView = (ListView) findViewById(R.id.viewpointListView);
+
+        List _dataList = new ArrayList<String>();
+        _dataList.add("test1");
+        _dataList.add("test2");
+
+        ArrayAdapter _adapter = new ArrayAdapter(this, R.layout.viewpoint_list_item, R.id.label, _dataList);
+
+        _listView.setAdapter(_adapter);
 
     }
 
@@ -86,6 +102,10 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            ListView _listView = (ListView)inflater.inflate(R.id.viewpointListView, container, false);
+
+
             return rootView;
         }
     }

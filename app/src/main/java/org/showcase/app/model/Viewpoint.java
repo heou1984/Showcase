@@ -66,4 +66,8 @@ public class Viewpoint {
         this.viewpoint = viewpoint;
     }
 
+    public String toString(){
+        return viewpoint;
+    }
+
 }

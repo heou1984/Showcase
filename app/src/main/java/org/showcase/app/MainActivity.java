@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import org.showcase.app.api.ApiClient;
@@ -38,15 +40,41 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
         */
-        BaseRequest _request = new BaseRequest();
 
-        _request.setQuery("test");
+        final EditText _searchInput = (EditText)findViewById(R.id.search_value);
+        Button _button = (Button)findViewById(R.id.search_button);
 
-        ApiClient.getService().queryViewpointsByKeywords(_request, new Callback<List<Viewpoint>>() {
+        _button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String _searchValue = _searchInput.getText().toString();
+                if(null != _searchValue){
+                    BaseRequest _request = new BaseRequest();
+                    _request.setQuery(_searchValue);
+                    doSearch(_request);
+                }
+            }
+        });
+
+    }
+
+    private final void doSearch(BaseRequest request){
+        final ActionBarActivity _currentActivity = this;
+
+        ApiClient.getService().queryViewpointsByKeywords(request, new Callback<List<Viewpoint>>() {
             @Override
             public void success(List<Viewpoint> viewpoints, Response response) {
-                System.out.println(">>>>>>>>>>>>>>");
-                System.out.println(viewpoints);
+                ListView _listView = (ListView) findViewById(R.id.viewpointListView);
+
+                List _dataList = new ArrayList<String>();
+                for (Viewpoint item : viewpoints){
+                    _dataList.add(item.toString());
+                }
+
+
+                ArrayAdapter _adapter = new ArrayAdapter(_currentActivity, R.layout.viewpoint_list_item, R.id.label, _dataList);
+
+                _listView.setAdapter(_adapter);
             }
 
             @Override
@@ -54,19 +82,6 @@ public class MainActivity extends ActionBarActivity {
                 System.out.println("________");
             }
         });
-
-
-
-        ListView _listView = (ListView) findViewById(R.id.viewpointListView);
-
-        List _dataList = new ArrayList<String>();
-        _dataList.add("test1");
-        _dataList.add("test2");
-
-        ArrayAdapter _adapter = new ArrayAdapter(this, R.layout.viewpoint_list_item, R.id.label, _dataList);
-
-        _listView.setAdapter(_adapter);
-
     }
 
 

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.showcase.app.adapter.ViewpointAdapter;
 import org.showcase.app.api.ApiClient;
 import org.showcase.app.model.BaseRequest;
 import org.showcase.app.model.Viewpoint;
@@ -67,13 +68,13 @@ public class MainActivity extends ActionBarActivity {
                 ListView _listView = (ListView) findViewById(R.id.viewpointListView);
 
                 List _dataList = new ArrayList<String>();
-                for (Viewpoint item : viewpoints){
+                for (Viewpoint item : viewpoints) {
                     _dataList.add(item.toString());
                 }
 
 
-                ArrayAdapter _adapter = new ArrayAdapter(_currentActivity, R.layout.viewpoint_list_item, R.id.label, _dataList);
-
+                //ArrayAdapter _adapter = new ArrayAdapter(_currentActivity, R.layout.viewpoint_list_item, R.id.label, _dataList);
+                ViewpointAdapter _adapter = new ViewpointAdapter(_currentActivity, 0, viewpoints);
                 _listView.setAdapter(_adapter);
             }
 

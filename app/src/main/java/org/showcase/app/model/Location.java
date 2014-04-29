@@ -3,8 +3,10 @@ package org.showcase.app.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
 
-public class Location {
+
+public class Location implements Serializable {
 
     @Expose
     private Float lat;

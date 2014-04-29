@@ -1,5 +1,6 @@
 package org.showcase.app;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,16 +11,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.showcase.app.activity.NearByViewpointActivity;
 import org.showcase.app.adapter.ViewpointAdapter;
 import org.showcase.app.api.ApiClient;
 import org.showcase.app.model.BaseRequest;
+import org.showcase.app.model.NearbyRequest;
 import org.showcase.app.model.Viewpoint;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +48,38 @@ public class MainActivity extends ActionBarActivity {
         */
 
         final EditText _searchInput = (EditText)findViewById(R.id.search_value);
-        Button _button = (Button)findViewById(R.id.search_button);
+        final Button _button = (Button)findViewById(R.id.search_button);
+        final ListView _viewpointListView = (ListView)findViewById(R.id.viewpointListView);
 
+        _viewpointListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                ViewpointAdapter _adapter = (ViewpointAdapter)adapterView.getAdapter();
+                Viewpoint _vp = _adapter.getItem(position);
+
+                NearbyRequest _request = new NearbyRequest();
+                _request.setLat(_vp.getLocation().getLat());
+                _request.setLng(_vp.getLocation().getLng());
+                _request.setWithKn(2);
+
+                BaseRequest _baseRequest = new BaseRequest<NearbyRequest>();
+                _baseRequest.setQuery(_request);
+                ApiClient.getService().nearbyByViewpoint(_baseRequest, new Callback<List<Viewpoint>>() {
+                    @Override
+                    public void success(List<Viewpoint> viewpoints, Response response) {
+                        Intent _intent = new Intent(MainActivity.this, NearByViewpointActivity.class);
+                        _intent.putExtra("NEARBY_VIEWPOINT", (Serializable) viewpoints);
+                        startActivity(_intent);
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+
+                    }
+                } );
+            }
+        });
         _button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,13 +102,6 @@ public class MainActivity extends ActionBarActivity {
             public void success(List<Viewpoint> viewpoints, Response response) {
                 ListView _listView = (ListView) findViewById(R.id.viewpointListView);
 
-                List _dataList = new ArrayList<String>();
-                for (Viewpoint item : viewpoints) {
-                    _dataList.add(item.toString());
-                }
-
-
-                //ArrayAdapter _adapter = new ArrayAdapter(_currentActivity, R.layout.viewpoint_list_item, R.id.label, _dataList);
                 ViewpointAdapter _adapter = new ViewpointAdapter(_currentActivity, 0, viewpoints);
                 _listView.setAdapter(_adapter);
             }

@@ -1,18 +1,19 @@
-
 package org.showcase.app.model;
-
 
 import com.google.gson.annotations.Expose;
 
-import java.io.Serializable;
-
-
-public class Center implements Serializable {
+/**
+ * Created by hugh on 4/29/14.
+ */
+public class NearbyRequest {
 
     @Expose
     private Float lat;
     @Expose
     private Float lng;
+    @Expose
+    private int withKn;
+
 
     public Float getLat() {
         return lat;
@@ -30,4 +31,11 @@ public class Center implements Serializable {
         this.lng = lng;
     }
 
+    public int getWithKn() {
+        return withKn;
+    }
+
+    public void setWithKn(int withKn) {
+        this.withKn = withKn;
+    }
 }

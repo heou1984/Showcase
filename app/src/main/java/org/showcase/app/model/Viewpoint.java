@@ -3,7 +3,9 @@ package org.showcase.app.model;
 
 import com.google.gson.annotations.Expose;
 
-public class Viewpoint {
+import java.io.Serializable;
+
+public class Viewpoint implements Serializable{
 
     @Expose
     private Center center;

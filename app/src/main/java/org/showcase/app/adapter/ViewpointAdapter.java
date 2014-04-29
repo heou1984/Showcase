@@ -46,6 +46,7 @@ public class ViewpointAdapter extends ArrayAdapter<Viewpoint> {
         return _view;
     }
 
+
     private static final class Holder{
         public TextView title;
         public TextView sub_title;

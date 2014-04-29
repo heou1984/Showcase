@@ -10,13 +10,13 @@
      <EditText
         android:id="@+id/search_value"
         android:layout_width="155dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:inputType="text"/>
 
     <Button
         android:id="@+id/search_button"
         android:layout_width="100dp"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:layout_marginLeft="155dp"
         android:text="search"/>
 
@@ -24,7 +24,7 @@
         android:id="@+id/viewpointListView"
         android:layout_width="wrap_content"
         android:layout_height="500dp"
-         android:layout_marginTop="35dp"/>
+         android:layout_marginTop="45dp"/>
 
 
 

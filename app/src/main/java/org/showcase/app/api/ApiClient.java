@@ -1,6 +1,7 @@
 package org.showcase.app.api;
 
 import org.showcase.app.model.BaseRequest;
+import org.showcase.app.model.NearbyRequest;
 import org.showcase.app.model.Viewpoint;
 
 import java.util.List;
@@ -33,7 +34,9 @@ public class ApiClient {
 
     public interface CrossRoadService{
         @POST("/queryvp")
-        void queryViewpointsByKeywords(@Body BaseRequest request, Callback<List<Viewpoint>> callback);
+        void queryViewpointsByKeywords(@Body BaseRequest<String> request, Callback<List<Viewpoint>> callback);
+        @POST("/nearby")
+        void nearbyByViewpoint(@Body BaseRequest<NearbyRequest> request, Callback<List<Viewpoint>> callback);
     }
 
 }
